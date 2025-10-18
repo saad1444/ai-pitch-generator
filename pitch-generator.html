@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Pitch Generator | PitchGenius</title>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .pitch-card { transition: all 0.3s ease; }
+    .pitch-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
+    .fade-in { animation: fadeIn 0.5s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center">
+          <i data-feather="zap" class="text-indigo-600 mr-2"></i>
+          <span class="text-xl font-bold text-indigo-600">PitchGenius</span>
+        </div>
+        <div>
+          <button id="viewSavedBtn" class="px-4 py-2 border border-indigo-600 text-indigo-600 rounded-md hover:bg-indigo-50 transition duration-300 flex items-center mr-4">
+            <i data-feather="bookmark" class="mr-2"></i> Saved Pitches
+          </button>
+          <button id="newPitchBtn" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300 flex items-center">
+            <i data-feather="plus" class="mr-2"></i> New Pitch
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-extrabold text-gray-900 mb-4">AI Pitch Generator</h1>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Describe your idea below and let our AI craft a compelling pitch for investors, customers, or partners.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Input Section -->
+      <div class="lg:col-span-2">
+        <div class="bg-white p-6 rounded-xl shadow-md">
+          <div class="mb-6">
+            <label for="pitchTitle" class="block text-sm font-medium text-gray-700 mb-2">Title/Headline</label>
+            <input type="text" id="pitchTitle" placeholder="e.g. Revolutionary AI Marketing Tool" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+          </div>
+          <div class="mb-6">
+            <label for="pitchDescription" class="block text-sm font-medium text-gray-700 mb-2">Describe Your Idea</label>
+            <textarea id="pitchDescription" rows="8" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Describe your product, service, or business idea in detail..."></textarea>
+          </div>
+          <div class="flex flex-wrap gap-4">
+            <div class="flex-1 min-w-[200px]">
+              <label for="pitchIndustry" class="block text-sm font-medium text-gray-700 mb-2">Industry</label>
+              <select id="pitchIndustry" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="">Select Industry</option>
+                <option value="Technology">Technology</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Finance">Finance</option>
+                <option value="Education">Education</option>
+                <option value="Retail">Retail</option>
+                <option value="Manufacturing">Manufacturing</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="flex-1 min-w-[200px]">
+              <label for="pitchAudience" class="block text-sm font-medium text-gray-700 mb-2">Target Audience</label>
+              <select id="pitchAudience" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="">Select Audience</option>
+                <option value="Investors">Investors</option>
+                <option value="Customers">Customers</option>
+                <option value="Partners">Partners</option>
+                <option value="Employees">Potential Employees</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-8">
+            <button id="generatePitchBtn" class="w-full px-6 py-4 bg-indigo-600 text-white text-lg font-medium rounded-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center">
+              <span id="generateText">Generate Pitch</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Output Section -->
+      <div class="lg:col-span-1">
+        <div class="bg-white p-6 rounded-xl shadow-md sticky top-4">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Your Generated Pitch</h3>
+          <div id="pitchOutput" class="p-4 bg-gray-50 rounded-lg min-h-[300px]">
+            <p class="text-gray-500 text-center mt-20">Your AI-generated pitch will appear here...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Saved Pitches Modal -->
+  <div id="savedPitchesModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-xl p-8 w-full max-w-4xl max-h-[80vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold text-gray-900">Your Saved Pitches</h3>
+        <button id="closeSavedModalBtn" class="text-gray-500 hover:text-gray-700">
+          <i data-feather="x"></i>
+        </button>
+      </div>
+      <div id="savedPitchesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      feather.replace();
+
+      const generatePitchBtn = document.getElementById('generatePitchBtn');
+      const viewSavedBtn = document.getElementById('viewSavedBtn');
+      const newPitchBtn = document.getElementById('newPitchBtn');
+      const closeSavedModalBtn = document.getElementById('closeSavedModalBtn');
+      const savedPitchesModal = document.getElementById('savedPitchesModal');
+      const pitchOutput = document.getElementById('pitchOutput');
+      const generateText = document.getElementById('generateText');
+
+      // Load saved pitches from localStorage
+      function loadSavedPitches() {
+        const saved = JSON.parse(localStorage.getItem('savedPitches') || '[]');
+        const container = document.getElementById('savedPitchesContainer');
+        container.innerHTML = saved.length === 0 ? '<p class="text-gray-500 italic">No saved pitches yet.</p>' : '';
+        saved.forEach(p => addPitchCard(container, p.title, p.content));
+      }
+
+      function addPitchCard(container, title, content) {
+        const pitchCard = document.createElement('div');
+        pitchCard.className = 'pitch-card p-4 border border-gray-200 rounded-lg hover:shadow-md transition duration-300';
+        pitchCard.innerHTML = `
+          <h4 class="font-bold text-gray-900 mb-1 truncate">${title}</h4>
+          <p class="text-gray-600 text-sm mb-3 line-clamp-2">${content.substring(0, 120)}${content.length > 120 ? '...' : ''}</p>
+          <div class="flex justify-between">
+            <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium viewBtn">View</button>
+            <button class="text-red-500 hover:text-red-700 text-sm font-medium deleteBtn">Delete</button>
+          </div>
+        `;
+        // View button
+        pitchCard.querySelector('.viewBtn').addEventListener('click', () => {
+          pitchOutput.innerHTML = `<h4 class="font-bold text-lg mb-2">${title}</h4><div class="text-gray-700 leading-relaxed space-y-3">${content}</div>`;
+        });
+        // Delete button
+        pitchCard.querySelector('.deleteBtn').addEventListener('click', () => {
+          pitchCard.remove();
+          const saved = JSON.parse(localStorage.getItem('savedPitches') || '[]');
+          const updated = saved.filter(p => !(p.title === title && p.content === content));
+          localStorage.setItem('savedPitches', JSON.stringify(updated));
+        });
+
+        container.prepend(pitchCard);
+      }
+
+      function savePitch(title, content) {
+        const saved = JSON.parse(localStorage.getItem('savedPitches') || '[]');
+        saved.push({ title, content });
+        localStorage.setItem('savedPitches', JSON.stringify(saved));
+        addPitchCard(document.getElementById('savedPitchesContainer'), title, content);
+      }
+
+      // Generate pitch
+      generatePitchBtn.addEventListener('click', () => {
+        const title = document.getElementById('pitchTitle').value || 'Untitled Pitch';
+        const description = document.getElementById('pitchDescription').value;
+        const industry = document.getElementById('pitchIndustry').value || 'General';
+        const audience = document.getElementById('pitchAudience').value || 'Stakeholders';
+
+        if (!description) { alert('Please describe your idea.'); return; }
+
+        generateText.textContent = 'Generating...';
+        generatePitchBtn.disabled = true;
+
+        setTimeout(() => {
+          const pitchHTML = `
+            <p>${title} is transforming the ${industry} landscape. It ${description.toLowerCase()} while addressing key challenges.</p>
+            <p>Designed for ${audience}, it delivers clear and measurable benefits through simplicity, automation, and data insights.</p>
+            <p>Its scalability and adaptability make it suitable for startups and large organizations alike.</p>
+          `;
+
+          pitchOutput.innerHTML = `<h4 class="font-bold text-lg mb-2">${title}</h4><div class="text-gray-700 leading-relaxed space-y-3">${pitchHTML}</div>`;
+          pitchOutput.classList.add('fade-in');
+
+          // Save automatically
+          savePitch(title, pitchHTML);
+
+          generateText.textContent = 'Generate Pitch';
+          generatePitchBtn.disabled = false;
+        }, 1500);
+      });
+
+      // Saved Pitches Modal
+      viewSavedBtn.addEventListener('click', () => savedPitchesModal.classList.remove('hidden'));
+      closeSavedModalBtn.addEventListener('click', () => savedPitchesModal.classList.add('hidden'));
+
+      // New Pitch
+      newPitchBtn.addEventListener('click', () => {
+        document.getElementById('pitchTitle').value = '';
+        document.getElementById('pitchDescription').value = '';
+        document.getElementById('pitchIndustry').value = '';
+        document.getElementById('pitchAudience').value = '';
+        pitchOutput.innerHTML = '<p class="text-gray-500 text-center mt-20">Your AI-generated pitch will appear here...</p>';
+      });
+
+      // Initialize
+      loadSavedPitches();
+    });
+  </script>
+</body>
+</html>

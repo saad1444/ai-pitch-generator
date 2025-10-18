@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - PitchGenius</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Firebase v9+ Modular SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    // Firebase config (tumhara provided)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBf4FrV_-uwX__Q-0sNcYZ-CGWX_94p9H0",
+      authDomain: "testing-c6fc7.firebaseapp.com",
+      projectId: "testing-c6fc7",
+      storageBucket: "testing-c6fc7.firebasestorage.app",
+      messagingSenderId: "147227990986",
+      appId: "1:147227990986:web:adfe8ac3787b75415b4d33",
+      measurementId: "G-T5HN4CZWRE"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // DOMContentLoaded ke andar addEventListener
+    document.addEventListener("DOMContentLoaded", () => {
+      feather.replace();
+
+      const form = document.getElementById("signupForm");
+      const msg = document.getElementById("msg");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!name || !email || !password) {
+          msg.textContent = "Please fill in all fields!";
+          msg.style.color = "orange";
+          return;
+        }
+
+        try {
+          // Firestore me user save karna
+          await addDoc(collection(db, "users"), {
+            name: name,
+            email: email,
+            password: password, // optional: production me hash karna
+            createdAt: serverTimestamp()
+          });
+
+          msg.textContent = "Account created successfully!";
+          msg.style.color = "green";
+
+          // Redirect to pitch-generator.html
+          setTimeout(() => {
+            window.location.href = "pitch-generator.html";
+          }, 1200);
+        } catch (error) {
+          console.error(error);
+          msg.textContent = "Error saving data!";
+          msg.style.color = "red";
+        }
+      });
+
+      // Vanta Background
+      VANTA.NET({
+        el: "#vanta-bg",
+        color: 0x764ba2,
+        backgroundColor: 0xf8fafc,
+        points: 12,
+        maxDistance: 22,
+        spacing: 18
+      });
+    });
+  </script>
+
+  <style>
+    .form-popup { animation: fadeIn 0.4s ease-out; }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(25px);} to {opacity:1; transform:translateY(0);} }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-100 flex items-center justify-center relative overflow-hidden">
+  <!-- Vanta Background -->
+  <div id="vanta-bg" class="absolute inset-0 -z-10"></div>
+
+  <!-- Sign Up Form -->
+  <div class="bg-white bg-opacity-90 rounded-2xl shadow-2xl p-8 w-full max-w-md form-popup">
+    <div class="flex items-center justify-center mb-6">
+      <i data-feather="zap" class="text-indigo-600 mr-2"></i>
+      <h2 class="text-2xl font-bold text-gray-800">Create Account</h2>
+    </div>
+
+    <form id="signupForm" class="space-y-5">
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+        <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" required>
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" required>
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+        <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" required>
+      </div>
+
+      <button type="submit" class="w-full py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-300 flex items-center justify-center">
+        <i data-feather="user-plus" class="mr-2"></i> Sign Up
+      </button>
+
+      <p id="msg" class="text-center text-sm mt-3"></p>
+    </form>
+  </div>
+</body>
+</html>

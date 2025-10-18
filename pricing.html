@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - PitchCraft</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .popular-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .feature-check {
+            color: #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <i data-feather="zap" class="w-6 h-6 text-indigo-600"></i>
+                    <span class="text-xl font-bold text-gray-900">PitchCraft</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
+                    <a href="features.html" class="text-gray-700 hover:text-indigo-600 transition">Features</a>
+                    <a href="pricing.html" class="text-indigo-600 font-semibold">Pricing</a>
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Demo</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Sign In</a>
+                    <a href="#" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">Simple, Transparent Pricing</h1>
+            <p class="text-xl md:text-2xl mb-8 text-indigo-100">Choose the perfect plan for your startup journey</p>
+            <div class="flex justify-center items-center space-x-4 mb-8">
+                <span class="text-lg">Monthly</span>
+                <button id="billingToggle" class="relative inline-flex items-center h-8 w-16 rounded-full bg-white bg-opacity-20 transition">
+                    <span id="toggleCircle" class="inline-block w-6 h-6 transform translate-x-1 rounded-full bg-white transition"></span>
+                </button>
+                <span class="text-lg">Yearly <span class="text-sm text-green-300">(Save 20%)</span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 -mt-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Starter Plan -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 card-hover">
+                    <div class="text-center mb-8">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-100 rounded-full mb-4">
+                            <i data-feather="compass" class="w-8 h-8 text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Starter</h3>
+                        <p class="text-gray-600 mb-6">Perfect for individual founders</p>
+                        <div class="mb-6">
+                            <span class="text-5xl font-bold text-gray-900">$<span id="starter-price">29</span></span>
+                            <span class="text-gray-600">/month</span>
+                        </div>
+                        <a href="#" class="block w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition font-semibold">Start Free Trial</a>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">5 pitch deck generations/month</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Basic AI analysis</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">10 templates</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Email support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Export to PDF/PPTX</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Professional Plan (Popular) -->
+                <div class="bg-white rounded-2xl shadow-2xl p-8 card-hover relative border-4 border-indigo-600">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                        <span class="popular-badge text-white px-6 py-2 rounded-full text-sm font-semibold">Most Popular</span>
+                    </div>
+                    <div class="text-center mb-8">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-100 rounded-full mb-4">
+                            <i data-feather="trending-up" class="w-8 h-8 text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
+                        <p class="text-gray-600 mb-6">For growing startups</p>
+                        <div class="mb-6">
+                            <span class="text-5xl font-bold text-gray-900">$<span id="pro-price">79</span></span>
+                            <span class="text-gray-600">/month</span>
+                        </div>
+                        <a href="#" class="block w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition font-semibold">Start Free Trial</a>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Unlimited pitch decks</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Advanced AI analysis</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">50+ premium templates</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Priority support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Team collaboration (5 users)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Custom branding</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Investor database access</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 card-hover">
+                    <div class="text-center mb-8">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-100 rounded-full mb-4">
+                            <i data-feather="award" class="w-8 h-8 text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+                        <p class="text-gray-600 mb-6">For established companies</p>
+                        <div class="mb-6">
+                            <span class="text-5xl font-bold text-gray-900">Custom</span>
+                        </div>
+                        <a href="#" class="block w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-gray-800 transition font-semibold">Contact Sales</a>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Everything in Professional</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Unlimited team members</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Dedicated account manager</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">Custom AI training</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">API access</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">SLA guarantee</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-feather="check" class="w-5 h-5 feature-check mt-1 mr-3"></i>
+                            <span class="text-gray-700">White-label options</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold text-center text-gray-900 mb-12">Frequently Asked Questions</h2>
+            <div class="space-y-6">
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2 flex items-center">
+                        <i data-feather="help-circle" class="w-5 h-5 text-indigo-600 mr-2"></i>
+                        Can I switch plans later?
+                    </h3>
+                    <p class="text-gray-600">Yes! You can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle.</p>
+                </div>
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2 flex items-center">
+                        <i data-feather="help-circle" class="w-5 h-5 text-indigo-600 mr-2"></i>
+                        Is there a free trial?
+                    </h3>
+                    <p class="text-gray-600">Absolutely! All plans come with a 14-day free trial. No credit card required to start.</p>
+                </div>
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2 flex items-center">
+                        <i data-feather="help-circle" class="w-5 h-5 text-indigo-600 mr-2"></i>
+                        What payment methods do you accept?
+                    </h3>
+                    <p class="text-gray-600">We accept all major credit cards, PayPal, and can arrange invoice billing for Enterprise customers.</p>
+                </div>
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2 flex items-center">
+                        <i data-feather="help-circle" class="w-5 h-5 text-indigo-600 mr-2"></i>
+                        Can I cancel anytime?
+                    </h3>
+                    <p class="text-gray-600">Yes, you can cancel your subscription at any time. You'll retain access until the end of your current billing period.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+
+           
+
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+
+        // Billing toggle functionality
+        const billingToggle = document.getElementById('billingToggle');
+        const toggleCircle = document.getElementById('toggleCircle');
+        const starterPrice = document.getElementById('starter-price');
+        const proPrice = document.getElementById('pro-price');
+        
+        let isYearly = false;
+        
+        billingToggle.addEventListener('click', function() {
+            isYearly = !isYearly;
+            
+            if (isYearly) {
+                toggleCircle.style.transform = 'translateX(2rem)';
+                starterPrice.textContent = '23';
+                proPrice.textContent = '63';
+            } else {
+                toggleCircle.style.transform = 'translateX(0.25rem)';
+                starterPrice.textContent = '29';
+                proPrice.textContent = '79';
+            }
+        });
+    </script>
+</body>
+</html>
